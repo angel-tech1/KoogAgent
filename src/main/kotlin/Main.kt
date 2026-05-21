@@ -1,7 +1,16 @@
 import kotlinx.coroutines.runBlocking
 
-fun main() = runBlocking {
+private fun printBanner() {
+    println("""
+▖  ▖   ▌▘    ▜   ▄▖      ▗ 
+▛▖▞▌█▌▛▌▌▛▘▀▌▐   ▌▌▛▌█▌▛▌▜▘
+▌▝ ▌▙▖▙▌▌▙▖█▌▐▖  ▛▌▙▌▙▖▌▌▐▖
+                   ▄▌      
+    """)
+}
 
+fun main() = runBlocking {
+    printBanner()
     Commands.printAvailableCommands()
     var userInput = askUser("How can I help you today?")
 
