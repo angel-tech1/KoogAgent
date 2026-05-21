@@ -1,6 +1,4 @@
 import Command.entries
-import ai.koog.agents.core.agent.GraphAIAgent
-import java.util.*
 
 enum class Command(val key: String, val description: String) {
     QUIT("/q", "Quit"),
@@ -29,16 +27,11 @@ object Commands {
         }
     }
 
-    fun run(command: Command, agent: GraphAIAgent<String, String>) {
+    fun run(command: Command) {
         when (command) {
             Command.QUIT -> println("Exiting")
             Command.HELP -> printAvailableCommands()
-            Command.CLEAR -> {
-                val newSessionId = UUID.randomUUID().toString()
-                agent.createSession(newSessionId)
-                println("New session: $newSessionId")
-            }
-            else -> println() // do nothing
+            else -> {}
         }
     }
 }

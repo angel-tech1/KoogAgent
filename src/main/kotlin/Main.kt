@@ -1,27 +1,23 @@
 import kotlinx.coroutines.runBlocking
 
-private fun printBanner() {
-    println("""
-▖  ▖   ▌▘    ▜   ▄▖      ▗ 
-▛▖▞▌█▌▛▌▌▛▘▀▌▐   ▌▌▛▌█▌▛▌▜▘
-▌▝ ▌▙▖▙▌▌▙▖█▌▐▖  ▛▌▙▌▙▖▌▌▐▖
-                   ▄▌      
-    """)
-}
-
 fun main() = runBlocking {
-    printBanner()
+    medicalResearchAgent.printBanner()
     Commands.printAvailableCommands()
+
+    var sessionId = medicalResearchAgent.startSession()
     var userInput = askUser("How can I help you today?")
 
     while (userInput != Command.QUIT.key) {
-
         if (Commands.isValidCommand(userInput)) {
-            Commands.run(Commands.valueOf(userInput), medicalResearchAgent)
-            userInput = askUser("")
+            if(Commands.valueOf(userInput) == Command.CLEAR) {
+                sessionId = medicalResearchAgent.startSession()
+            } else {
+                Commands.run(Commands.valueOf(userInput))
+            }
+            userInput = askUser()
         } else {
             println("Please wait a moment...")
-            val result = medicalResearchAgent.run(userInput)
+            val result = medicalResearchAgent.run(userInput, sessionId)
 
             println(result)
             userInput = askUser("Do you have any other question?")
